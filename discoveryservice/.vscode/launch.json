@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DiscoveryApplication<discovery>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "info.michaelmogessie.discovery.DiscoveryApplication",
+            "projectName": "discovery",
+            "args": ""
+        }
+    ]
+}
