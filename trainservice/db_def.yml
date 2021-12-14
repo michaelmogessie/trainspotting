@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: db-service
+    labels:
+      db.type: mysql
+spec:
+    containers:
+    - name: mysql
+      image: mysql:latest
+      env:
+        - name:  MYSQL_ROOT_PASSWORD
+          value: ma5queradE1
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    db.type: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
