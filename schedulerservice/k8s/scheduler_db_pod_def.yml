@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    namespace: michaelmogessie
+    name: scheduler-db
+    labels:
+      db.name: scheduler-db
+spec:
+    containers:
+    - name: mysql
+      image: mysql:latest
+      env:
+        - name:  MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-config-secret
+              key: MYSQL_ROOT_PASSWORD
+
+---
