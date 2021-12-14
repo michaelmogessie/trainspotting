@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: train-scheduler-db
+    labels:
+      app.name: train-scheduler-db
+    namespace: michaelmogessie
+spec:
+    containers:
+    - name: mysql
+      image: mysql:5.7
+      env:
+        - name:  MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: train-scheduler-db-config-secret
+              key: MYSQL_ROOT_PASSWORD
