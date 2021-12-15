@@ -51,7 +51,7 @@ public class TrainController {
     }
 
     @PostMapping("/trains")
-    ResponseEntity<?> newEmployee(@RequestBody Train train) {
+    ResponseEntity<?> addTrain(@RequestBody Train train) {
 
         try {
             train = trainRepository.save(train);
