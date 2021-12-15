@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: station-manager-deployment
+  namespace: michaelmogessie
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.name: station-manager
+  template:
+    metadata:
+      labels:
+        app.name: station-manager
+    spec:
+      containers:
+      - name: station-manager
+        image: michaelmogessie/station-manager-app:latest
+        ports:
+          - containerPort: 8487
+      imagePullSecrets:
+      - name: regcred
