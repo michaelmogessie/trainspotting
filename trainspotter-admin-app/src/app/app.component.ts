@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'trainspotter-admin-app';
+
+  onTabChanged($event: any) {
+    console.log($event.index);
+  }
+
 }
+
