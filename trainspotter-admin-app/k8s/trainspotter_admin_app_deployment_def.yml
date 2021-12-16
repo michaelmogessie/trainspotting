@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trainspotter-admin-app-deployment
+  namespace: michaelmogessie
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.name: trainspotter-admin
+  template:
+    metadata:
+      labels:
+        app.name: trainspotter-admin
+    spec:
+      containers:
+      - name: trainspotter-admin
+        image: michaelmogessie/trainspotter-admin-app:latest
+        ports:
+          - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
