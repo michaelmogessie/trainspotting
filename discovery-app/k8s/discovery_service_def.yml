@@ -8,6 +8,6 @@ spec:
   selector:
     app.name: eureka
   ports:
-    - port: 8484
-      targetPort: 8484
+    - port: 8483
+      targetPort: 8483
       nodePort: 30030

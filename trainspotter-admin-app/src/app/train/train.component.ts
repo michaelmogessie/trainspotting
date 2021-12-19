@@ -8,18 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class TrainComponent implements OnInit {
-  constructor(private http: HttpClient) { }
   displayedColumns: string[] = ['trainId', 'trainName'];
-  dataSource: any = []
+  dataSource: any = [];
+
+  constructor(private http: HttpClient) { }
   ngOnInit(): void {
     this.getTrains();
   }
 
   getTrains() {
     this.http.get('http://localhost:30032/trains').subscribe((trains: any) => {
-      this.dataSource = trains['_embedded']['trainList'];
-      console.table(this.dataSource)
-    })
+      // eslint-disable-next-line @typescript-eslint/dot-notation
+      this.dataSource = trains['_embedded'].trainList;
+    });
   }
 
 }

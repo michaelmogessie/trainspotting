@@ -1,4 +1,4 @@
-mvn clean install -DskipTests
+mvn clean install -DskipTests -Pprod
 docker build -t michaelmogessie/train-scheduler-app .
 docker push michaelmogessie/train-scheduler-app:latest
 kubectl delete deploy train-scheduler-deployment -n michaelmogessie || true

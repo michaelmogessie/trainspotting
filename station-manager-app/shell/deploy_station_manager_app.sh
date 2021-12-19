@@ -1,4 +1,4 @@
-mvn clean install -DskipTests
+mvn clean install -DskipTests -Pprod
 docker build -t michaelmogessie/station-manager-app .
 docker push michaelmogessie/station-manager-app:latest
 kubectl delete deploy station-manager-deployment -n michaelmogessie || true

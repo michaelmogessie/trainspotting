@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import info.michaelmogessie.scheduler.pojos.Schedule;
 import info.michaelmogessie.scheduler.pojos.Train;
 import info.michaelmogessie.scheduler.repositories.ScheduleRepository;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class ScheduleController {
@@ -56,12 +58,12 @@ public class ScheduleController {
         }
 
         @GetMapping(value = "/trains")
-        public ResponseEntity<CollectionModel<EntityModel<Train>>> getTrains() {
-                return ResponseEntity.ok(CollectionModel.of(webClientBuilder.build().get()
+        public Mono<CollectionModel<EntityModel<Train>>> getTrains() {
+                ParameterizedTypeReference<CollectionModel<EntityModel<Train>>> type = new ParameterizedTypeReference<CollectionModel<EntityModel<Train>>>() {
+                };
+
+                return webClientBuilder.build().get()
                                 .uri("http://train-management-service/trains")
-                                .retrieve().bodyToFlux(Train.class)
-                                .collectList().share().block().stream()
-                                .map(train -> EntityModel.of(train))
-                                .collect(Collectors.toList())));
+                                .retrieve().bodyToMono(type);
         }
 }
