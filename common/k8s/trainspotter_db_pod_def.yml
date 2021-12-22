@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: train-scheduler-db
+    name: trainspotter-db
     labels:
-      app.name: train-scheduler-db
+      app.name: trainspotter-db
     namespace: michaelmogessie
 spec:
     containers:
@@ -13,5 +13,5 @@ spec:
         - name:  MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: train-scheduler-db-config-secret
+              name: trainspotter-db-config-secret
               key: MYSQL_ROOT_PASSWORD

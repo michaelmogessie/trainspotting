@@ -1,0 +1,1 @@
+kubectl create -f /home/michael/git/trainspotting/common/k8s/trainspotter_db_secret_def.yml
