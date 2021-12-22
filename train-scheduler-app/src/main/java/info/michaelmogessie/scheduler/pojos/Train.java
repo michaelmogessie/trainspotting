@@ -1,13 +1,27 @@
 package info.michaelmogessie.scheduler.pojos;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class Train {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(nullable = false)
     private int trainId;
+    @Column(nullable = false)
     private String trainName;
 
     public int getTrainId() {
@@ -24,6 +38,14 @@ public class Train {
 
     public void setTrainName(String trainName) {
         this.trainName = trainName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TabchangeService } from './services/tabchange.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'trainspotter-admin-app';
 
+  constructor(private tabChangeService: TabchangeService) { }
+
   onTabChanged($event: any) {
-    console.log($event.index);
+    this.tabChangeService.emitTabChangeEvent($event.index);
   }
 
 }
