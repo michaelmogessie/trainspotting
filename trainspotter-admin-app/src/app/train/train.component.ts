@@ -27,6 +27,7 @@ export class TrainComponent implements OnInit {
     this.http.get('http://localhost:30032/trains').subscribe((trains: any) => {
       // eslint-disable-next-line @typescript-eslint/dot-notation
       this.dataSource = trains['_embedded'].trainList;
+      this.tabChangeService.emitTrainsEvent(this.dataSource);
     });
   }
 

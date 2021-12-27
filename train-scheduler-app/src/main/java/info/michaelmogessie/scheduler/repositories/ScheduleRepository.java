@@ -1,9 +1,8 @@
 package info.michaelmogessie.scheduler.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import info.michaelmogessie.scheduler.pojos.Schedule;
 
-public interface ScheduleRepository extends CrudRepository<Schedule, Integer> {
-
+public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 }

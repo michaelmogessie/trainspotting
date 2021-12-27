@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -36,7 +36,7 @@ public class Schedule extends RepresentationModel<Schedule> {
     private Timestamp arrivalTime;
     @OneToOne(cascade = { CascadeType.ALL })
     private Train train;
-    @OneToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.ALL })
     List<Station> stations = new ArrayList<>();
 
     public Train getTrain() {

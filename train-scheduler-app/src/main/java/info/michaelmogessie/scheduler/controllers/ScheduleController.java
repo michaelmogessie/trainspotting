@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import info.michaelmogessie.scheduler.businesses.ScheduleBusiness;
 import info.michaelmogessie.scheduler.pojos.Schedule;
 import info.michaelmogessie.scheduler.pojos.Station;
 import info.michaelmogessie.scheduler.pojos.Train;
@@ -34,6 +35,8 @@ import reactor.core.publisher.Mono;
 public class ScheduleController {
         @Autowired
         private ScheduleRepository scheduleRepository;
+        @Autowired
+        private ScheduleBusiness scheduleBusiness;
         @Autowired
         private WebClient.Builder webClientBuilder;
 
@@ -89,7 +92,7 @@ public class ScheduleController {
         ResponseEntity<?> addSchedule(@RequestBody Schedule schedule) {
 
                 try {
-                        schedule = scheduleRepository.save(schedule);
+                        schedule = scheduleBusiness.saveSchedule(schedule);
 
                         EntityModel<Schedule> scheduleModel = EntityModel.of(schedule,
                                         linkTo(methodOn(ScheduleController.class).getSchedule(schedule.getScheduleId()))

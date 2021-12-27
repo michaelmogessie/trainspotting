@@ -23,6 +23,12 @@ export class ScheduleComponent implements OnInit {
         this.getSchedules();
       }
     });
+    this.tabChangeService.trains.subscribe((trains: any) => {
+      this.trains = trains;
+    });
+    this.tabChangeService.stations.subscribe((stations: any) => {
+      this.stations = stations;
+    });
   }
 
   getSchedules() {
@@ -35,29 +41,13 @@ export class ScheduleComponent implements OnInit {
     });
   };
 
-  getStations() {
-    this.http.get('http://localhost:30033/stations').subscribe((stations: any) => {
-      console.table(stations);
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      this.stations = stations['_embedded'].stationList;
-    });
-  }
-
-  getTrains() {
-    this.http.get('http://localhost:30032/trains').subscribe((trains: any) => {
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      this.trains = trains['_embedded'].trainList;
-    });
-  }
-
   addSchedule() {
-    this.getStations();
-    this.getTrains();
     const schedule = {};
     schedule['departureTime'] = Date.now();
     schedule['arrivalTime'] = Date.now();
     schedule['train'] = this.trains[0];
     schedule['stations'] = this.stations;
+    console.table(schedule);
     this.http.post('http://localhost:30031/schedules', schedule).subscribe((savedSchedule: any) => {
       // eslint-disable-next-line @typescript-eslint/dot-notation
       this.schedules.push(savedSchedule);

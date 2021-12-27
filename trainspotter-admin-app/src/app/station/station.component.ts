@@ -27,6 +27,7 @@ export class StationComponent implements OnInit {
     this.http.get('http://localhost:30033/stations').subscribe((stations: any) => {
       // eslint-disable-next-line @typescript-eslint/dot-notation
       this.dataSource = stations['_embedded'].stationList;
+      this.tabChangeService.emitStationsEvent(this.dataSource);
     });
   }
   addStation() {
