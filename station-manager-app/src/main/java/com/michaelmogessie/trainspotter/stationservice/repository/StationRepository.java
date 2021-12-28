@@ -1,4 +1,4 @@
-package com.michaelmogessie.trainspotter.stationservice.repositories;
+package com.michaelmogessie.trainspotter.stationservice.repository;
 
 import com.michaelmogessie.trainspotter.stationservice.pojos.Station;
 
