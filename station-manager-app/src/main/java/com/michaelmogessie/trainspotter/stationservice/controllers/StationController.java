@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.michaelmogessie.trainspotter.stationservice.business.StationBusiness;
 import com.michaelmogessie.trainspotter.stationservice.pojos.Station;
-import com.michaelmogessie.trainspotter.stationservice.repositories.StationRepository;
+import com.michaelmogessie.trainspotter.stationservice.repository.StationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class StationController {
         @Autowired
         private StationRepository stationRepository;
+        @Autowired
+        StationBusiness stationBusiness;
 
         @GetMapping(value = "/stations")
         public ResponseEntity<CollectionModel<EntityModel<Station>>> getStations() {
@@ -62,7 +65,7 @@ public class StationController {
         ResponseEntity<?> addStation(@RequestBody Station station) {
 
                 try {
-                        station = stationRepository.save(station);
+                        station = stationBusiness.saveStation(station);
 
                         EntityModel<Station> stationModel = EntityModel.of(station,
                                         linkTo(methodOn(StationController.class).getStation(station.getStationId()))

@@ -36,4 +36,8 @@ public class Station {
         this.stationName = stationName;
     }
 
+    public void updateStationInfo(Station station) {
+        this.stationName = station.getStationName();
+    }
+
 }

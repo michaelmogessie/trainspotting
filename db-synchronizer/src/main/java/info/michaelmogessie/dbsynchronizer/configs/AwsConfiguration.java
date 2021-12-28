@@ -3,26 +3,29 @@ package info.michaelmogessie.dbsynchronizer.configs;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import info.michaelmogessie.dbsynchronizer.business.DbSynchronizerBusiness;
+import info.michaelmogessie.dbsynchronizer.business.DbSynchronizationBusiness;
 import info.michaelmogessie.dbsynchronizer.business.ScheduleBusiness;
+import info.michaelmogessie.dbsynchronizer.business.StationDbSynchronizationBusiness;
+import info.michaelmogessie.dbsynchronizer.business.TrainDbSynchronizationBusiness;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 @Configuration
 public class AwsConfiguration {
     @Bean
-    public SnsClient snsClient() {
-        return SnsClient.builder().region(Region.US_EAST_2).build();
-    }
-
-    @Bean
-    public SqsAsyncClient sqslient() {
+    public SqsAsyncClient sqsAsyncClient() {
         return SqsAsyncClient.builder().region(Region.US_EAST_2).build();
     }
 
     @Bean
-    public DbSynchronizerBusiness dbSynchronizerBusiness(ScheduleBusiness scheduleBusiness) {
-        return new DbSynchronizerBusiness(scheduleBusiness);
+    public DbSynchronizationBusiness trainDbSynchronizerBusiness(ScheduleBusiness scheduleBusiness,
+            SqsAsyncClient sqsAsyncClient) {
+        return new TrainDbSynchronizationBusiness(scheduleBusiness, sqsAsyncClient);
+    }
+
+    @Bean
+    public DbSynchronizationBusiness stationDbSynchronizerBusiness(ScheduleBusiness scheduleBusiness,
+            SqsAsyncClient sqsAsyncClient) {
+        return new StationDbSynchronizationBusiness(scheduleBusiness, sqsAsyncClient);
     }
 }

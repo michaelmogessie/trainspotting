@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import info.michaelmogessie.scheduler.pojos.Schedule;
@@ -19,7 +18,6 @@ import info.michaelmogessie.scheduler.repositories.TrainRepository;
 
 @Service
 public class ScheduleBusiness {
-    @Autowired
     private final ScheduleRepository scheduleRepository;
     private final TrainRepository trainRepository;
     private final StationRepository stationRepository;

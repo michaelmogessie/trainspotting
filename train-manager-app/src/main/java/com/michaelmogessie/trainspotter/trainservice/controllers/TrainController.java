@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.michaelmogessie.trainspotter.trainservice.business.TrainBusiness;
 import com.michaelmogessie.trainspotter.trainservice.pojos.Train;
-import com.michaelmogessie.trainspotter.trainservice.repositories.TrainRepository;
+import com.michaelmogessie.trainspotter.trainservice.repository.TrainRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainController {
         @Autowired
         private TrainRepository trainRepository;
+        @Autowired
+        private TrainBusiness trainBusiness;
 
         @GetMapping(value = "/trains")
         public ResponseEntity<CollectionModel<EntityModel<Train>>> getTrains() {
@@ -59,7 +62,7 @@ public class TrainController {
         ResponseEntity<?> addTrain(@RequestBody Train train) {
 
                 try {
-                        train = trainRepository.save(train);
+                        train = trainBusiness.saveTrain(train);
 
                         EntityModel<Train> trainModel = EntityModel.of(train,
                                         linkTo(methodOn(TrainController.class).getTrain(train.getTrainId()))
