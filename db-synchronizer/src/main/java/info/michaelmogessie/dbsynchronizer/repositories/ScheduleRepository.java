@@ -10,5 +10,7 @@ import info.michaelmogessie.dbsynchronizer.pojos.Schedule;
 @Repository
 public interface ScheduleRepository extends CrudRepository<Schedule, Integer> {
     public List<Schedule> findByTrainTrainIdEquals(Integer trainId);
-    public List<Schedule> findByStationsStationIdEquals(Integer stationId);
+
+    public List<Schedule> findByDeparturesStationStationIdEquals(Integer stationId);
+    public List<Schedule> findByArrivalsStationStationIdEquals(Integer stationId);
 }

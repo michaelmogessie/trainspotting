@@ -1,7 +1,6 @@
 package info.michaelmogessie.dbsynchronizer.pojos;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -30,14 +29,12 @@ public class Schedule extends RepresentationModel<Schedule> {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int scheduleId;
-    @Column(nullable = false)
-    private Timestamp departureTime;
-    @Column(nullable = false)
-    private Timestamp arrivalTime;
     @OneToOne(cascade = { CascadeType.ALL })
     private Train train;
-    @OneToMany(cascade = { CascadeType.ALL })
-    List<Station> stations = new ArrayList<>();
+    @ManyToMany(cascade = { CascadeType.ALL })
+    List<CheckPoint> departures = new LinkedList<>();
+    @ManyToMany(cascade = { CascadeType.ALL })
+    List<CheckPoint> arrivals = new LinkedList<>();
 
     public Train getTrain() {
         return train;
@@ -45,14 +42,6 @@ public class Schedule extends RepresentationModel<Schedule> {
 
     public void setTrain(Train train) {
         this.train = train;
-    }
-
-    public List<Station> getStations() {
-        return stations;
-    }
-
-    public void setStations(List<Station> stations) {
-        this.stations = stations;
     }
 
     public int getScheduleId() {
@@ -63,19 +52,20 @@ public class Schedule extends RepresentationModel<Schedule> {
         this.scheduleId = scheduleId;
     }
 
-    public Timestamp getDepartureTime() {
-        return departureTime;
+    public List<CheckPoint> getDepartures() {
+        return departures;
     }
 
-    public void setDepartureTime(Timestamp departureTime) {
-        this.departureTime = departureTime;
+    public void setDepartures(List<CheckPoint> departures) {
+        this.departures = departures;
     }
 
-    public Timestamp getArrivalTime() {
-        return arrivalTime;
+    public List<CheckPoint> getArrivals() {
+        return arrivals;
     }
 
-    public void setArrivalTime(Timestamp arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setArrivals(List<CheckPoint> arrivals) {
+        this.arrivals = arrivals;
     }
+
 }

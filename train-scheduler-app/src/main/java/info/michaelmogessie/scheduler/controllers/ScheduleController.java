@@ -82,9 +82,8 @@ public class ScheduleController {
         public Mono<CollectionModel<EntityModel<Station>>> getStations() {
                 ParameterizedTypeReference<CollectionModel<EntityModel<Station>>> type = new ParameterizedTypeReference<CollectionModel<EntityModel<Station>>>() {
                 };
-
                 return webClientBuilder.build().get()
-                                .uri("http://train-management-service/stations")
+                                .uri("http://station-management-service/stations")
                                 .retrieve().bodyToMono(type);
         }
 

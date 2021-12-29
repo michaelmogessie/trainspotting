@@ -5,18 +5,18 @@ import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 
-import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
 import software.amazon.awssdk.services.sqs.model.Message;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 
 public abstract class DbSynchronizationBusiness implements Runnable {
-    final SqsAsyncClient sqsAsyncClient;
+    final SqsClient sqsClient;
     final ScheduleBusiness scheduleBusiness;
 
-    DbSynchronizationBusiness(ScheduleBusiness scheduleBusiness, SqsAsyncClient sqsAsyncClient) {
+    DbSynchronizationBusiness(ScheduleBusiness scheduleBusiness, SqsClient sqsClient) {
         this.scheduleBusiness = scheduleBusiness;
-        this.sqsAsyncClient = sqsAsyncClient;
+        this.sqsClient = sqsClient;
     }
 
     @PostConstruct
@@ -30,13 +30,13 @@ public abstract class DbSynchronizationBusiness implements Runnable {
                 .queueUrl(sqsQueueUrl)
                 .maxNumberOfMessages(5)
                 .build();
-        List<Message> messages = sqsAsyncClient.receiveMessage(receiveMessageRequest).get().messages();
+        List<Message> messages = sqsClient.receiveMessage(receiveMessageRequest).messages();
         for (Message message : messages) {
             DeleteMessageRequest deleteMessageRequest = DeleteMessageRequest.builder()
                     .queueUrl(sqsQueueUrl)
                     .receiptHandle(message.receiptHandle())
                     .build();
-            sqsAsyncClient.deleteMessage(deleteMessageRequest);
+            sqsClient.deleteMessage(deleteMessageRequest);
         }
         return messages;
     }

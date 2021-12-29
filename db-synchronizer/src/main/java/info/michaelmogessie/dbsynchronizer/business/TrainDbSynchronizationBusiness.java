@@ -7,16 +7,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class TrainDbSynchronizationBusiness extends DbSynchronizationBusiness {
 
     @Value("${sqsTrainsQueueUrl}")
     private String sqsTrainsQueueUrl;
+    @Value("${sqsQueuePollingInterval}")
+    private int sqsQueuePollingInterval;
 
-    public TrainDbSynchronizationBusiness(ScheduleBusiness scheduleBusiness, SqsAsyncClient sqsAsyncClient) {
-        super(scheduleBusiness, sqsAsyncClient);
+    public TrainDbSynchronizationBusiness(ScheduleBusiness scheduleBusiness, SqsClient sqsClient) {
+        super(scheduleBusiness, sqsClient);
     }
 
     @Override
@@ -27,7 +29,7 @@ public class TrainDbSynchronizationBusiness extends DbSynchronizationBusiness {
                 if (!messages.isEmpty()) {
                     scheduleBusiness.updateTrains(messages);
                 }
-                Thread.sleep(5000);
+                Thread.sleep(sqsQueuePollingInterval);
             } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
                 System.err.println(e);
             }
