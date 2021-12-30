@@ -1,6 +1,6 @@
 package info.michaelmogessie.scheduler.pojos;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,10 @@ public class CheckPoint {
     @OneToOne(cascade = { CascadeType.ALL })
     private Station station;
     @Column(nullable = false)
-    private Timestamp eta;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date eta;
+    @Column(nullable = false, columnDefinition = "int default 5")
+    private int stopDurationMinutes;
 
     public int getCheckpointId() {
         return checkpointId;
@@ -45,12 +50,20 @@ public class CheckPoint {
         this.station = station;
     }
 
-    public Timestamp getEta() {
+    public Date getEta() {
         return eta;
     }
 
-    public void setEta(Timestamp eta) {
+    public void setEta(Date eta) {
         this.eta = eta;
+    }
+
+    public int getStopDurationMinutes() {
+        return stopDurationMinutes;
+    }
+
+    public void setStopDurationMinutes(int stopDurationMinutes) {
+        this.stopDurationMinutes = stopDurationMinutes;
     }
 
 }

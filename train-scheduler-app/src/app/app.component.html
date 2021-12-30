@@ -1,12 +1,43 @@
-<h2 class="title">Train Spotter</h2>
-<mat-tab-group animationDuration="0ms" mat-align-tabs="center" (selectedTabChange)="onTabChanged($event)">
-  <mat-tab label="Schedules">
-    <app-schedule></app-schedule>
-  </mat-tab>
-  <mat-tab label="Trains">
-    <app-train></app-train>
-  </mat-tab>
-  <mat-tab label="Stations">
-    <app-station></app-station>
-  </mat-tab>
-</mat-tab-group>
+<mat-accordion>
+  <mat-expansion-panel disabled>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="board-header">
+        <span class="trainName">Train</span>
+        <span class="fromStation">From</span>
+        <span class="toStation">To</span>
+        <span class="departs">Departs</span>
+        <span class="status">Status</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let schedule of schedules">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="trainName">{{schedule.train.trainId}} - {{schedule.train.trainName | uppercase}}</span>
+        <span class="fromStation">{{schedule.checkPoints[0].station.stationName | uppercase}}</span>
+        <span class="toStation">{{schedule.checkPoints[schedule.checkPoints.length - 1].station.stationName |
+          uppercase}}</span>
+        <span class="departs">{{schedule.checkPoints[0].eta | date: "MMM d yyyy, h:mm a"}}</span>
+        <span class="status">{{schedule.status | uppercase}}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-label>Train</mat-label>
+      <mat-select [(ngModel)]="schedule.train.trainId" required>
+        <mat-option [value]="train.trainId" *ngFor="let train of trains">{{ train.trainName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="chip-list" appearance="fill">
+      <mat-label>Checkpoints</mat-label>
+      <mat-chip-list #chipList aria-label="Checkpoints">
+        <mat-chip *ngFor="let checkPoint of schedule.checkPoints" (removed)="removeCheckPoint(checkPoint)">
+          {{checkPoint.station.stationName | uppercase}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New checkpoint..." [matChipInputFor]="chipList"
+          (matChipInputTokenEnd)="addCheckPoint($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { TabchangeService } from '../services/tabchange.service';
 
 @Component({
   selector: 'app-schedule',
@@ -9,30 +8,25 @@ import { TabchangeService } from '../services/tabchange.service';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-  displayedColumns: string[] = ['scheduleId', 'departureTime', 'arrivalTime', 'trainName'];
   tabIndex = 0;
   schedules = [];
   trains = [];
   stations = [];
-  constructor(private http: HttpClient, private tabChangeService: TabchangeService) { }
+  
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+  }
+
+  getData() {
     this.getSchedules();
-    this.tabChangeService.tabChange.subscribe((tabIndex: number) => {
-      if (this.tabIndex === tabIndex) {
-        this.getSchedules();
-      }
-    });
-    this.tabChangeService.trains.subscribe((trains: any) => {
-      this.trains = trains;
-    });
-    this.tabChangeService.stations.subscribe((stations: any) => {
-      this.stations = stations;
-    });
+    this.getTrains();
+    this.getStations();
   }
 
   getSchedules() {
-    this.http.get('http://localhost:30031/schedules').subscribe((schedules: any) => {
+    console.table(this.http)
+    this.http.get('http://localhost:8485/schedules').subscribe((schedules: any) => {
       // eslint-disable-next-line @typescript-eslint/dot-notation
       if (schedules['_embedded']) {
         // eslint-disable-next-line @typescript-eslint/dot-notation
@@ -41,18 +35,30 @@ export class ScheduleComponent implements OnInit {
     });
   };
 
+  getTrains() {
+    this.http.get('http://localhost:8486/trains').subscribe((trains: any) => {
+      // eslint-disable-next-line @typescript-eslint/dot-notation
+      this.trains = trains['_embedded'].trainList;
+    });
+  }
+
+  getStations() {
+    this.http.get('http://localhost:8487/stations').subscribe((stations: any) => {
+      // eslint-disable-next-line @typescript-eslint/dot-notation
+      this.stations = stations['_embedded'].stationList;
+    });
+  }
+
   addSchedule() {
     const schedule = {};
     schedule['departureTime'] = Date.now();
     schedule['arrivalTime'] = Date.now();
     schedule['train'] = this.trains[0];
     schedule['stations'] = this.stations;
-    console.table(schedule);
     this.http.post('http://localhost:30031/schedules', schedule).subscribe((savedSchedule: any) => {
       // eslint-disable-next-line @typescript-eslint/dot-notation
       this.schedules.push(savedSchedule);
-      this.schedules = [...this.schedules];
     });
-  };
+  }
 
 }

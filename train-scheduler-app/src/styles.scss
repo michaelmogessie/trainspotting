@@ -3,3 +3,8 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+    font-family: retrofont;
+    src: url("assets/fonts/LEDBDREV.TTF") format("opentype");
+}

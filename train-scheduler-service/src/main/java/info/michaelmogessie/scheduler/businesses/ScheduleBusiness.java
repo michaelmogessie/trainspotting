@@ -21,9 +21,7 @@ public class ScheduleBusiness {
     }
 
     public Schedule saveSchedule(Schedule schedule) {
-        schedule.getArrivals().forEach(checkPoint -> checkPoint
-                .setStation(stationRepository.findById(checkPoint.getStation().getStationId()).get()));
-        schedule.getDepartures().forEach(checkPoint -> checkPoint
+        schedule.getCheckPoints().forEach(checkPoint -> checkPoint
                 .setStation(stationRepository.findById(checkPoint.getStation().getStationId()).get()));
         schedule.setTrain(trainRepository.findById(schedule.getTrain().getTrainId()).get());
         return scheduleRepository.save(schedule);

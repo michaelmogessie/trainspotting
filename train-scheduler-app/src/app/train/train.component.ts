@@ -11,8 +11,6 @@ const trainNames = ['ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQR', 'STU', 'VWX', 'YZA
 })
 
 export class TrainComponent implements OnInit {
-  displayedColumns: string[] = ['trainId', 'trainName'];
-  dataSource: any = [];
   tabIndex = 1;
   constructor(private http: HttpClient, private tabChangeService: TabchangeService) { }
   ngOnInit(): void {
@@ -26,8 +24,6 @@ export class TrainComponent implements OnInit {
   getTrains() {
     this.http.get('http://localhost:30032/trains').subscribe((trains: any) => {
       // eslint-disable-next-line @typescript-eslint/dot-notation
-      this.dataSource = trains['_embedded'].trainList;
-      this.tabChangeService.emitTrainsEvent(this.dataSource);
     });
   }
 
@@ -38,8 +34,6 @@ export class TrainComponent implements OnInit {
     this.http.post('http://localhost:30032/trains', train)
       .subscribe((savedTrain: any) => {
         // eslint-disable-next-line @typescript-eslint/dot-notation
-        this.dataSource.push(savedTrain);
-        this.dataSource = [...this.dataSource];
       });
   }
 
