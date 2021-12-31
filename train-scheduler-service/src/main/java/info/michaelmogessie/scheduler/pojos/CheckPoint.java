@@ -26,7 +26,7 @@ public class CheckPoint {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int checkpointId;
-    @OneToOne(cascade = { CascadeType.ALL })
+    @OneToOne(cascade = { CascadeType.PERSIST })
     private Station station;
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

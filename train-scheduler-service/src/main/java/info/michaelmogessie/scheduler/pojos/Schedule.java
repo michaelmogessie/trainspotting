@@ -29,7 +29,7 @@ public class Schedule extends RepresentationModel<Schedule> {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int scheduleId;
-    @OneToOne(cascade = { CascadeType.ALL })
+    @OneToOne(cascade = { CascadeType.PERSIST })
     private Train train;
     @ManyToMany(cascade = { CascadeType.ALL })
     List<CheckPoint> checkPoints = new LinkedList<>();

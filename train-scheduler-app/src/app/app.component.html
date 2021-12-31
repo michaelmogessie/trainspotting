@@ -13,31 +13,60 @@
   <mat-expansion-panel *ngFor="let schedule of schedules">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <span class="trainName">{{schedule.train.trainId}} - {{schedule.train.trainName | uppercase}}</span>
-        <span class="fromStation">{{schedule.checkPoints[0].station.stationName | uppercase}}</span>
-        <span class="toStation">{{schedule.checkPoints[schedule.checkPoints.length - 1].station.stationName |
-          uppercase}}</span>
-        <span class="departs">{{schedule.checkPoints[0].eta | date: "MMM d yyyy, h:mm a"}}</span>
+        <span class="trainName">{{schedule.train.trainId}} {{schedule.train.trainName | uppercase}}</span>
+        <span class="fromStation"><span
+            *ngIf="schedule.checkPoints.length">{{schedule.checkPoints[0].station.stationName |
+            uppercase}}</span></span>
+        <span class="toStation"><span
+            *ngIf="schedule.checkPoints.length">{{schedule.checkPoints[schedule.checkPoints.length -
+            1].station.stationName |
+            uppercase}}</span></span>
+        <span class="departs"><span *ngIf="schedule.checkPoints.length">{{schedule.checkPoints[0].eta | date: "MMM d
+            yyyy, h:mm a"}}</span></span>
         <span class="status">{{schedule.status | uppercase}}</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field>
       <mat-label>Train</mat-label>
-      <mat-select [(ngModel)]="schedule.train.trainId" required>
+      <mat-select [(ngModel)]="schedule.train.trainId" required (selectionChange)="onTrainChanged(schedule.scheduleId, schedule.train.trainId)">
         <mat-option [value]="train.trainId" *ngFor="let train of trains">{{ train.trainName }}</mat-option>
       </mat-select>
-    </mat-form-field>
-
+    </mat-form-field><br>
     <mat-form-field class="chip-list" appearance="fill">
       <mat-label>Checkpoints</mat-label>
       <mat-chip-list #chipList aria-label="Checkpoints">
-        <mat-chip *ngFor="let checkPoint of schedule.checkPoints" (removed)="removeCheckPoint(checkPoint)">
+        <mat-chip *ngFor="let checkPoint of schedule.checkPoints"
+          (removed)="removeCheckPoint(schedule.scheduleId, checkPoint.checkPointId)">
           {{checkPoint.station.stationName | uppercase}}
-            <mat-icon matChipRemove>cancel</mat-icon>
+          <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input placeholder="New checkpoint..." [matChipInputFor]="chipList"
-          (matChipInputTokenEnd)="addCheckPoint($event)">
       </mat-chip-list>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="schedule.status" required>
+        <mat-option [value]="status" *ngFor="let status of statuses">{{ status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="right-aligned">
+      <button class="fabs" mat-mini-fab aria-label="Add checkpoint" (click)="addCheckPoint(schedule.scheduleId)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="right-aligned">
+      <button class="fabs" mat-mini-fab aria-label="Add checkpoint" (click)="saveSchedule(schedule.scheduleId)">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+    <div class="right-aligned">
+      <button class="fabs" mat-mini-fab aria-label="Add checkpoint" (click)="removeSchedule(schedule.scheduleId)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </mat-expansion-panel>
+  <div class="right-aligned">
+    <button mat-fab class="fabs top-margin-medium right-margin-medium" aria-label="Example icon button with a delete icon" (click)="addSchedule()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </mat-accordion>
