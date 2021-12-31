@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>New checkpoint</h1>
+<div mat-dialog-content>
+
+    <mat-form-field>
+        <mat-label>Station</mat-label>
+        <mat-select [(ngModel)]="stationId" required>
+            <mat-option [value]="station.stationId" *ngFor="let station of stations">{{ station.stationName }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Hour</mat-label>
+        <mat-select [(ngModel)]="hour" required>
+            <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Minute</mat-label>
+        <mat-select [(ngModel)]="minute" required>
+            <mat-option [value]="minute" *ngFor="let minute of minutes">{{ minute }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Stop duration (minutes):</mat-label>
+        <input matInput type="number" min=-1 max=60 [(ngModel)]="stopDurationMinutes" required>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">CANCEL</button>
+    <button mat-button (click)="setData()">ADD CHECKPOINT</button>
+</div>
