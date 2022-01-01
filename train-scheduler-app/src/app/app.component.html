@@ -28,15 +28,16 @@
     </mat-expansion-panel-header>
     <mat-form-field>
       <mat-label>Train</mat-label>
-      <mat-select [(ngModel)]="schedule.train.trainId" required (selectionChange)="onTrainChanged(schedule.scheduleId, schedule.train.trainId)">
-        <mat-option [value]="train.trainId" *ngFor="let train of trains">{{ train.trainName }}</mat-option>
+      <mat-select [(ngModel)]="schedule.train.trainId" required>
+        <mat-option [value]="train.trainId" *ngFor="let train of trains" (click)="onTrainChanged(schedule.scheduleId, train.trainId)">{{ train.trainName }}</mat-option>
       </mat-select>
     </mat-form-field><br>
     <mat-form-field class="chip-list" appearance="fill">
       <mat-label>Checkpoints</mat-label>
       <mat-chip-list #chipList aria-label="Checkpoints">
         <mat-chip *ngFor="let checkPoint of schedule.checkPoints"
-          (removed)="removeCheckPoint(schedule.scheduleId, checkPoint.checkPointId)">
+          (removed)="removeCheckPoint(schedule.scheduleId, checkPoint.checkPointId)" matTooltip="{{checkPoint.eta | date: 'MMM d
+          yyyy, h:mm a'}}" matTooltipClass="tooltip-eta">
           {{checkPoint.station.stationName | uppercase}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>

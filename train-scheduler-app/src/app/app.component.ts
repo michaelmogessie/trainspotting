@@ -51,12 +51,14 @@ export class AppComponent implements OnInit {
   }
 
   removeCheckPoint(scheduleId, checkPointId) {
+    console.log(checkPointId)
     let schedule = this.schedules.filter(schedule => schedule.scheduleId == scheduleId)[0]
     let index = 0
     schedule.checkPoints.forEach(checkPoint => {
       if (checkPoint.checkPointId == checkPointId) return false;
       index += 1
     });
+    console.log(index)
     schedule.checkPoints.splice(index, 1)
   }
 
@@ -114,7 +116,7 @@ export class AppComponent implements OnInit {
   }
 
   onTrainChanged(scheduleId, trainId) {
-    this.schedules.filter(schedule => schedule.scheduleId == scheduleId)[0].train = this.trains.filter(train => train.trainId == trainId)[0]
+    this.schedules.filter(schedule => schedule.scheduleId == scheduleId)[0].train = Object.assign({}, this.trains.filter(train => train.trainId == trainId)[0])
   }
 
 }
