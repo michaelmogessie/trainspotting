@@ -40,4 +40,18 @@ public class StationBusiness {
         return station;
     }
 
+    public void removeStation(Integer stationId) {
+        stationRepository.deleteById(stationId);
+        try {
+            PublishRequest request = PublishRequest.builder().message(String.valueOf(stationId))
+                    .topicArn(stationsTopicArn)
+                    .messageGroupId("stations").build();
+            PublishResponse result = snsClient.publish(request);
+            System.out
+                    .println(result.messageId() + " Message sent. Status is " + result.sdkHttpResponse().statusCode());
+        } catch (SnsException e) {
+            System.err.println(e);
+        }
+    }
+
 }

@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,18 +25,21 @@ public class CheckPoint {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int checkpointId;
-    @ManyToOne(cascade = { CascadeType.ALL })
+    private int checkPointId;
+    @OneToOne(cascade = { CascadeType.PERSIST })
     private Station station;
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Timestamp eta;
+    @Column(nullable = false, columnDefinition = "int default 5")
+    private int stopDurationMinutes;
 
-    public int getCheckpointId() {
-        return checkpointId;
+    public int getCheckPointId() {
+        return checkPointId;
     }
 
-    public void setCheckpointId(int checkpointId) {
-        this.checkpointId = checkpointId;
+    public void setCheckPointId(int checkPointId) {
+        this.checkPointId = checkPointId;
     }
 
     public Station getStation() {
@@ -43,6 +48,14 @@ public class CheckPoint {
 
     public void setStation(Station station) {
         this.station = station;
+    }
+
+    public int getStopDurationMinutes() {
+        return stopDurationMinutes;
+    }
+
+    public void setStopDurationMinutes(int stopDurationMinutes) {
+        this.stopDurationMinutes = stopDurationMinutes;
     }
 
     public Timestamp getEta() {

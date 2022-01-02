@@ -19,6 +19,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,6 +74,17 @@ public class TrainController {
                                         .body(trainModel);
                 } catch (URISyntaxException e) {
                         return ResponseEntity.badRequest().body("Unable to create " + train);
+                }
+        }
+
+        @DeleteMapping("/trains/{trainId}")
+        ResponseEntity<?> removeTrain(@PathVariable int trainId) {
+
+                try {
+                        trainBusiness.removeTrain(trainId);
+                        return ResponseEntity.ok().build();
+                } catch (Exception e) {
+                        return ResponseEntity.badRequest().body("Unable to delete " + trainId);
                 }
         }
 

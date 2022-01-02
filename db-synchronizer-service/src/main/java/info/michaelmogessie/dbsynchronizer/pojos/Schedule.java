@@ -29,12 +29,16 @@ public class Schedule extends RepresentationModel<Schedule> {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int scheduleId;
-    @OneToOne(cascade = { CascadeType.ALL })
+    @OneToOne(cascade = { CascadeType.PERSIST })
     private Train train;
     @ManyToMany(cascade = { CascadeType.ALL })
-    List<CheckPoint> departures = new LinkedList<>();
-    @ManyToMany(cascade = { CascadeType.ALL })
-    List<CheckPoint> arrivals = new LinkedList<>();
+    List<CheckPoint> checkPoints = new LinkedList<>();
+    @Column(columnDefinition = "varchar(12) not null default 'ON TIME'")
+    private String status = statusOnTime;
+
+    public static final String statusOnTime = "ON TIME";
+    public static final String statusDelayed = "DELAYED";
+    public static final String statusCanceled = "CANCELED";
 
     public Train getTrain() {
         return train;
@@ -52,20 +56,20 @@ public class Schedule extends RepresentationModel<Schedule> {
         this.scheduleId = scheduleId;
     }
 
-    public List<CheckPoint> getDepartures() {
-        return departures;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDepartures(List<CheckPoint> departures) {
-        this.departures = departures;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public List<CheckPoint> getArrivals() {
-        return arrivals;
+    public List<CheckPoint> getCheckPoints() {
+        return checkPoints;
     }
 
-    public void setArrivals(List<CheckPoint> arrivals) {
-        this.arrivals = arrivals;
+    public void setCheckPoints(List<CheckPoint> checkPoints) {
+        this.checkPoints = checkPoints;
     }
 
 }

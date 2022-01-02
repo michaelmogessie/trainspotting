@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>DELETE TRAIN</h1>
+<mat-dialog-content>
+    <h2>Are you sure? All schedules associated with this train will be removed.</h2>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">NO</button>
+    <button mat-button [mat-dialog-close]="true">YES</button>
+</mat-dialog-actions>

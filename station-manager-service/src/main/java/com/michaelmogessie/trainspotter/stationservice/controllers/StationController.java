@@ -19,6 +19,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,4 +81,14 @@ public class StationController {
                 }
         }
 
+        @DeleteMapping("/stations/{stationId}")
+        ResponseEntity<?> removeStation(@PathVariable int stationId) {
+
+                try {
+                        stationBusiness.removeStation(stationId);
+                        return ResponseEntity.ok().build();
+                } catch (Exception e) {
+                        return ResponseEntity.badRequest().body("Unable to delete " + stationId);
+                }
+        }
 }

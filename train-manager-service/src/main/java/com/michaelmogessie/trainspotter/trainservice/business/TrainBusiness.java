@@ -38,4 +38,18 @@ public class TrainBusiness {
         }
         return train;
     }
+
+    public void removeTrain(Integer trainId) {
+        trainRepository.deleteById(trainId);
+        try {
+            PublishRequest request = PublishRequest.builder().message(String.valueOf(trainId))
+                    .topicArn(trainsTopicArn)
+                    .messageGroupId("trains").build();
+            PublishResponse result = snsClient.publish(request);
+            System.out
+                    .println(result.messageId() + " Message sent. Status is " + result.sdkHttpResponse().statusCode());
+        } catch (SnsException e) {
+            System.err.println(e);
+        }
+    }
 }
