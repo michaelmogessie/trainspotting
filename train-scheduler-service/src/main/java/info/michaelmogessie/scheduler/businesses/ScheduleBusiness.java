@@ -3,6 +3,7 @@ package info.michaelmogessie.scheduler.businesses;
 import org.springframework.stereotype.Service;
 
 import info.michaelmogessie.scheduler.pojos.Schedule;
+import info.michaelmogessie.scheduler.pojos.StationSchedule;
 import info.michaelmogessie.scheduler.repositories.ScheduleRepository;
 import info.michaelmogessie.scheduler.repositories.StationRepository;
 import info.michaelmogessie.scheduler.repositories.TrainRepository;
@@ -26,4 +27,11 @@ public class ScheduleBusiness {
         schedule.setTrain(trainRepository.findById(schedule.getTrain().getTrainId()).get());
         return scheduleRepository.save(schedule);
     }
+
+    public StationSchedule getStationSchedule(int stationId) {
+        return new StationSchedule(
+                scheduleRepository.findByCheckPointsStationStationIdEqualsOrderByCheckPointsEtaAsc(stationId),
+                stationId);
+    }
+
 }

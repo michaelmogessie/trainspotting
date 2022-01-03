@@ -27,6 +27,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import info.michaelmogessie.scheduler.businesses.ScheduleBusiness;
 import info.michaelmogessie.scheduler.pojos.Schedule;
 import info.michaelmogessie.scheduler.pojos.Station;
+import info.michaelmogessie.scheduler.pojos.StationSchedule;
 import info.michaelmogessie.scheduler.pojos.Train;
 import info.michaelmogessie.scheduler.repositories.ScheduleRepository;
 import reactor.core.publisher.Mono;
@@ -67,6 +68,19 @@ public class ScheduleController {
                                                                 .withRel("schedules")))
                                 .map(ResponseEntity::ok)
                                 .orElse(ResponseEntity.notFound().build());
+        }
+
+        @GetMapping("/station-schedules/{stationId}")
+        public ResponseEntity<EntityModel<StationSchedule>> getStationSchedule(
+                        @PathVariable int stationId) {
+                EntityModel<StationSchedule> stationSchedule = EntityModel
+                                .of(scheduleBusiness.getStationSchedule(stationId),
+                                                linkTo(methodOn(ScheduleController.class)
+                                                                .getStationSchedule(stationId)).withSelfRel(),
+                                                linkTo(methodOn(ScheduleController.class).getSchedules())
+                                                                .withRel("schedules"));
+
+                return ResponseEntity.ok(stationSchedule);
         }
 
         @GetMapping(value = "/trains")
