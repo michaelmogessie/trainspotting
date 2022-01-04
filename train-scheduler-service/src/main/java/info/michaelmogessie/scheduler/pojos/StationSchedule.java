@@ -1,45 +1,42 @@
 package info.michaelmogessie.scheduler.pojos;
 
 import java.sql.Timestamp;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.DateTime;
 
 public class StationSchedule {
-    private Map<Integer, Map<Integer, Map<Timestamp, Train>>> departures = new HashMap<>();
-    private Map<Integer, Map<Integer, Map<Timestamp, Train>>> arrivals = new HashMap<>();
+    private List<SimpleSchedule> departures = new ArrayList<>();
+    private List<SimpleSchedule> arrivals = new ArrayList<>();
 
     public StationSchedule(List<Schedule> schedules, int stationId) {
         for (Schedule schedule : schedules) {
             CheckPoint cp = schedule.getCheckPoints().stream()
                     .filter(checkPoint -> checkPoint.getStation().getStationId() == stationId).toList().get(0);
 
-            arrivals.put(schedule.getScheduleId(), Collections.singletonMap(schedule.getTrain().getTrainId(),
-                    Collections.singletonMap(cp.getEta(), schedule.getTrain())));
-            departures.put(schedule.getScheduleId(), Collections.singletonMap(schedule.getTrain().getTrainId(),
-                    Collections.singletonMap(
-                            new Timestamp(
-                                    new DateTime(cp.getEta()).plusMinutes(cp.getStopDurationMinutes()).getMillis()),
-                            schedule.getTrain())));
+            arrivals.add(new SimpleSchedule(schedule.getScheduleId(), schedule.getTrain().getTrainId(),
+                    schedule.getTrain().getTrainName(), cp.getEta()));
+            departures.add(new SimpleSchedule(schedule.getScheduleId(), schedule.getTrain().getTrainId(),
+                    schedule.getTrain().getTrainName(), new Timestamp(
+                            new DateTime(cp.getEta()).plusMinutes(cp.getStopDurationMinutes()).getMillis())));
+
         }
     }
 
-    public Map<Integer, Map<Integer, Map<Timestamp, Train>>> getDepartures() {
+    public List<SimpleSchedule> getDepartures() {
         return departures;
     }
 
-    public void setDepartures(Map<Integer, Map<Integer, Map<Timestamp, Train>>> departures) {
+    public void setDepartures(List<SimpleSchedule> departures) {
         this.departures = departures;
     }
 
-    public Map<Integer, Map<Integer, Map<Timestamp, Train>>> getArrivals() {
+    public List<SimpleSchedule> getArrivals() {
         return arrivals;
     }
 
-    public void setArrivals(Map<Integer, Map<Integer, Map<Timestamp, Train>>> arrivals) {
+    public void setArrivals(List<SimpleSchedule> arrivals) {
         this.arrivals = arrivals;
     }
 
