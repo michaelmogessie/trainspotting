@@ -3,28 +3,22 @@
         <mat-expansion-panel-header>
             <mat-panel-title class="board-header">
                 <span class="trainName">Train</span>
-                <span class="fromStation">From</span>
                 <span class="toStation">To</span>
                 <span class="departs">Departs</span>
                 <span class="status">Status</span>
             </mat-panel-title>
         </mat-expansion-panel-header>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngFor="let schedule of schedules" disabled>
+    <mat-expansion-panel *ngFor="let departure of departures" disabled>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <span class="trainName">{{schedule.train.trainId}} {{schedule.train.trainName | uppercase}}</span>
-                <span class="fromStation"><span
-                        *ngIf="schedule.checkPoints.length">{{schedule.checkPoints[0].station.stationName |
-                        uppercase}}</span></span>
+                <span class="trainName">{{departure.trainName | uppercase}}</span>
                 <span class="toStation"><span
-                        *ngIf="schedule.checkPoints.length">{{schedule.checkPoints[schedule.checkPoints.length -
-                        1].station.stationName |
-                        uppercase}}</span></span>
-                <span class="departs"><span *ngIf="schedule.checkPoints.length">{{schedule.checkPoints[0].eta | date:
+                        *ngIf="departure.toStation">{{departure.toStation | uppercase}}</span></span>
+                <span class="departs"><span *ngIf="departure.eta">{{departure.eta | date:
                         "MMM d
                         yyyy, h:mm a"}}</span></span>
-                <span class="status">{{schedule.status | uppercase}}</span>
+                <span class="status">{{departure.status | uppercase}}</span>
             </mat-panel-title>
         </mat-expansion-panel-header>
     </mat-expansion-panel>

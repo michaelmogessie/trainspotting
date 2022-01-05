@@ -9,6 +9,7 @@ public class SimpleSchedule {
     private Timestamp eta;
     private String fromStation;
     private String toStation;
+    private String status;
 
     public int getScheduleId() {
         return scheduleId;
@@ -21,6 +22,7 @@ public class SimpleSchedule {
         result = prime * result + ((eta == null) ? 0 : eta.hashCode());
         result = prime * result + ((fromStation == null) ? 0 : fromStation.hashCode());
         result = prime * result + scheduleId;
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
         result = prime * result + ((toStation == null) ? 0 : toStation.hashCode());
         result = prime * result + trainId;
         result = prime * result + ((trainName == null) ? 0 : trainName.hashCode());
@@ -47,6 +49,11 @@ public class SimpleSchedule {
         } else if (!fromStation.equals(other.fromStation))
             return false;
         if (scheduleId != other.scheduleId)
+            return false;
+        if (status == null) {
+            if (other.status != null)
+                return false;
+        } else if (!status.equals(other.status))
             return false;
         if (toStation == null) {
             if (other.toStation != null)
@@ -91,11 +98,15 @@ public class SimpleSchedule {
         this.eta = eta;
     }
 
-    public SimpleSchedule(int scheduleId, int trainId, String trainName, Timestamp eta) {
+    public SimpleSchedule(int scheduleId, int trainId, String trainName, Timestamp eta, String fromStation,
+            String toStation, String status) {
         this.scheduleId = scheduleId;
         this.trainId = trainId;
         this.trainName = trainName;
         this.eta = eta;
+        this.fromStation = fromStation;
+        this.toStation = toStation;
+        this.status = status;
     }
 
     public String getFromStation() {
@@ -112,6 +123,14 @@ public class SimpleSchedule {
 
     public void setToStation(String toStation) {
         this.toStation = toStation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -1,1 +1,25 @@
-<p>arrivals works!</p>
+<mat-accordion>
+    <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="board-header">
+                <span class="trainName">Train</span>
+                <span class="fromStation">From</span>
+                <span class="departs">Arrives</span>
+                <span class="status">Status</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngFor="let arrival of arrivals" disabled>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span class="trainName">{{arrival.trainName | uppercase}}</span>
+                <span class="fromStation"><span *ngIf="arrival.fromStation">{{arrival.fromStation |
+                        uppercase}}</span></span>
+                <span class="arrives"><span *ngIf="arrival.eta">{{arrival.eta | date:
+                        "MMM d
+                        yyyy, h:mm a"}}</span></span>
+                <span class="status">{{arrival.status | uppercase}}</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+</mat-accordion>
