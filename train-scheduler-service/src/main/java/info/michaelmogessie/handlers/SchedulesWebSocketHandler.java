@@ -59,7 +59,7 @@ public class SchedulesWebSocketHandler extends TextWebSocketHandler {
         });
     }
 
-    public void sendStationUpdate(int stationId, SimpleSchedule simpleSchedule) {
+    public static void sendStationUpdate(int stationId, SimpleSchedule simpleSchedule) {
         stationKiosks.get(stationId).forEach(stationKiosk -> {
             try {
                 stationKiosk.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(simpleSchedule)));

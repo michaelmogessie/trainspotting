@@ -1,10 +1,15 @@
 package info.michaelmogessie.scheduler.businesses;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import info.michaelmogessie.handlers.SchedulesWebSocketHandler;
 import info.michaelmogessie.scheduler.pojos.Schedule;
+import info.michaelmogessie.scheduler.pojos.SimpleSchedule;
 import info.michaelmogessie.scheduler.pojos.StationSchedule;
+import info.michaelmogessie.scheduler.pojos.TrainScheduleHelper;
 import info.michaelmogessie.scheduler.repositories.ScheduleRepository;
 import info.michaelmogessie.scheduler.repositories.StationRepository;
 import info.michaelmogessie.scheduler.repositories.TrainRepository;
@@ -34,6 +39,22 @@ public class ScheduleBusiness {
         return new StationSchedule(
                 scheduleRepository.findByCheckPointsStationStationIdEqualsOrderByCheckPointsEtaAsc(stationId),
                 stationId);
+    }
+
+    @Transactional
+    public List<SimpleSchedule> getTrainSchedules(int trainId) {
+        return TrainScheduleHelper.createTrainSchedules(scheduleRepository.findByTrainTrainId(trainId), null);
+    }
+
+    @Transactional
+    public void updateTrainSchedule(SimpleSchedule trainSchedule) {
+        Schedule schedule = scheduleRepository.findById(trainSchedule.getScheduleId()).get();
+        schedule.setAtStation(trainSchedule.getAtStation());
+        schedule.setStatus(trainSchedule.getStatus());
+        scheduleRepository.save(schedule);
+        if (trainSchedule.getAtStation() != null) {
+            SchedulesWebSocketHandler.sendStationUpdate(trainSchedule.getAtStation().getStationId(), trainSchedule);
+        }
     }
 
 }

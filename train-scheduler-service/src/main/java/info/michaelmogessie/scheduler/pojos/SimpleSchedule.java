@@ -1,6 +1,7 @@
 package info.michaelmogessie.scheduler.pojos;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class SimpleSchedule {
     private int scheduleId;
@@ -9,16 +10,24 @@ public class SimpleSchedule {
     private Timestamp eta;
     private String fromStation;
     private String toStation;
+    private Station atStation;
     private String status;
+    private List<Station> stations;
+    private List<String> statuses = List.of(Schedule.statusOnTime, Schedule.statusDelayed, Schedule.statusCanceled);
 
     public int getScheduleId() {
         return scheduleId;
+    }
+
+    public Station getAtStation() {
+        return atStation;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((atStation == null) ? 0 : atStation.hashCode());
         result = prime * result + ((eta == null) ? 0 : eta.hashCode());
         result = prime * result + ((fromStation == null) ? 0 : fromStation.hashCode());
         result = prime * result + scheduleId;
@@ -38,6 +47,11 @@ public class SimpleSchedule {
         if (getClass() != obj.getClass())
             return false;
         SimpleSchedule other = (SimpleSchedule) obj;
+        if (atStation == null) {
+            if (other.atStation != null)
+                return false;
+        } else if (!atStation.equals(other.atStation))
+            return false;
         if (eta == null) {
             if (other.eta != null)
                 return false;
@@ -68,6 +82,10 @@ public class SimpleSchedule {
         } else if (!trainName.equals(other.trainName))
             return false;
         return true;
+    }
+
+    public void setAtStation(Station atStation) {
+        this.atStation = atStation;
     }
 
     public void setScheduleId(int scheduleId) {
@@ -109,6 +127,19 @@ public class SimpleSchedule {
         this.status = status;
     }
 
+    public SimpleSchedule(int scheduleId, int trainId, String trainName, Timestamp eta, String fromStation,
+            String toStation, Station atStation, String status, List<Station> stations) {
+        this.scheduleId = scheduleId;
+        this.trainId = trainId;
+        this.trainName = trainName;
+        this.eta = eta;
+        this.fromStation = fromStation;
+        this.toStation = toStation;
+        this.atStation = atStation;
+        this.status = status;
+        this.stations = stations;
+    }
+
     public String getFromStation() {
         return fromStation;
     }
@@ -131,6 +162,22 @@ public class SimpleSchedule {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Station> getStations() {
+        return stations;
+    }
+
+    public void setStations(List<Station> stations) {
+        this.stations = stations;
+    }
+
+    public List<String> getStatuses() {
+        return statuses;
+    }
+
+    public void setStatuses(List<String> statuses) {
+        this.statuses = statuses;
     }
 
 }

@@ -4,6 +4,7 @@
             <mat-panel-title class="board-header">
                 <span class="trainName">Train</span>
                 <span class="toStation">To</span>
+                <span class="atStation">Now at</span>
                 <span class="departs">Departs</span>
                 <span class="status">Status</span>
             </mat-panel-title>
@@ -15,6 +16,7 @@
                 <span class="trainName">{{departure.trainName | uppercase}}</span>
                 <span class="toStation"><span
                         *ngIf="departure.toStation">{{departure.toStation | uppercase}}</span></span>
+                <span class="atStation"><span *ngIf="departure.atStation">{{departure.atStation.stationName}}</span><span *ngIf="!departure.atStation">-</span></span>
                 <span class="departs"><span *ngIf="departure.eta">{{departure.eta | date:
                         "MMM d
                         yyyy, h:mm a"}}</span></span>

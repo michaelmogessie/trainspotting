@@ -8,4 +8,6 @@ import info.michaelmogessie.scheduler.pojos.Schedule;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     public List<Schedule> findByCheckPointsStationStationIdEqualsOrderByCheckPointsEtaAsc(Integer stationId);
+
+    public List<Schedule> findByTrainTrainId(Integer trainId);
 }

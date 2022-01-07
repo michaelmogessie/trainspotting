@@ -31,6 +31,8 @@ public class Schedule extends RepresentationModel<Schedule> {
     private int scheduleId;
     @OneToOne(cascade = { CascadeType.PERSIST })
     private Train train;
+    @OneToOne(cascade = { CascadeType.PERSIST })
+    private Station atStation;
     @ManyToMany(cascade = { CascadeType.ALL })
     List<CheckPoint> checkPoints = new LinkedList<>();
     @Column(columnDefinition = "varchar(12) not null default 'ON TIME'")
@@ -70,6 +72,26 @@ public class Schedule extends RepresentationModel<Schedule> {
 
     public void setCheckPoints(List<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
+    }
+
+    public Station getAtStation() {
+        return atStation;
+    }
+
+    public void setAtStation(Station atStation) {
+        this.atStation = atStation;
+    }
+
+    public static String getStatusontime() {
+        return statusOnTime;
+    }
+
+    public static String getStatusdelayed() {
+        return statusDelayed;
+    }
+
+    public static String getStatuscanceled() {
+        return statusCanceled;
     }
 
 }

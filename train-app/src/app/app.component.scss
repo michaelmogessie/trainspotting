@@ -1,4 +1,23 @@
+.trainNamePicker {
+    font-size: 1.3em;
+    color: hsl(39, 94%, 50%);
+    font-family: retrofont;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    margin-top: 1%;
+}
+
 .trainName {
+    width: 20em;
+    font-size: 1.3em;
+    color: hsl(39, 94%, 50%);
+    font-family: retrofont;
+}
+
+.fromStation {
     width: 20em;
     font-size: 1.3em;
     color: hsl(39, 94%, 50%);
@@ -12,7 +31,7 @@
     font-family: retrofont;
 }
 
-.departs {
+.arrives {
     width: 20em;
     font-size: 1.3em;
     color: hsl(39, 94%, 50%);
@@ -35,4 +54,10 @@
 
 .mat-expansion-panel-header {
     background-color: rgba(6, 1, 20, 0.986);
+}
+
+.drop-down {
+    width: 48%;
+    margin-top: 1%;;
+    margin-right: 1%;
 }

@@ -26,6 +26,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import info.michaelmogessie.scheduler.businesses.ScheduleBusiness;
 import info.michaelmogessie.scheduler.pojos.Schedule;
+import info.michaelmogessie.scheduler.pojos.SimpleSchedule;
 import info.michaelmogessie.scheduler.pojos.Station;
 import info.michaelmogessie.scheduler.pojos.StationSchedule;
 import info.michaelmogessie.scheduler.pojos.Train;
@@ -71,16 +72,54 @@ public class ScheduleController {
         }
 
         @GetMapping("/station-schedules/{stationId}")
-        public ResponseEntity<EntityModel<StationSchedule>> getStationSchedule(
+        public ResponseEntity<EntityModel<StationSchedule>> getStationSchedules(
                         @PathVariable int stationId) {
                 EntityModel<StationSchedule> stationSchedule = EntityModel
                                 .of(scheduleBusiness.getStationSchedule(stationId),
                                                 linkTo(methodOn(ScheduleController.class)
-                                                                .getStationSchedule(stationId)).withSelfRel(),
+                                                                .getStationSchedules(stationId)).withSelfRel(),
                                                 linkTo(methodOn(ScheduleController.class).getSchedules())
                                                                 .withRel("schedules"));
 
                 return ResponseEntity.ok(stationSchedule);
+        }
+
+        @GetMapping("/train-schedules/{trainId}")
+        public ResponseEntity<CollectionModel<EntityModel<SimpleSchedule>>> getTrainSchedules(
+                        @PathVariable int trainId) {
+                List<EntityModel<SimpleSchedule>> trainSchedules = scheduleBusiness.getTrainSchedules(trainId)
+                                .stream().map(trainSchedule -> EntityModel.of(trainSchedule,
+                                                linkTo(methodOn(ScheduleController.class)
+                                                                .getTrainSchedules(trainId)).withSelfRel(),
+                                                linkTo(methodOn(ScheduleController.class).getSchedules())
+                                                                .withRel("schedules")))
+                                .collect(Collectors.toList());
+
+                return ResponseEntity.ok(
+                                CollectionModel.of(trainSchedules,
+                                                linkTo(methodOn(ScheduleController.class).getSchedules())
+                                                                .withSelfRel()));
+        }
+
+        @PostMapping("/train-schedules")
+        ResponseEntity<?> updateTrainSchedule(@RequestBody SimpleSchedule trainSchedule) {
+
+                try {
+                        scheduleBusiness.updateTrainSchedule(trainSchedule);
+
+                        EntityModel<SimpleSchedule> scheduleModel = EntityModel.of(trainSchedule,
+                                        linkTo(methodOn(ScheduleController.class)
+                                                        .getSchedule(trainSchedule.getScheduleId()))
+                                                                        .withSelfRel());
+
+                        return ResponseEntity
+                                        .created(new URI(
+                                                        scheduleModel.getRequiredLink(IanaLinkRelations.SELF)
+                                                                        .getHref()))
+                                        .body(scheduleModel);
+                } catch (URISyntaxException e) {
+                        return ResponseEntity.badRequest().body("Unable to update " + trainSchedule);
+                }
         }
 
         @GetMapping(value = "/trains")
