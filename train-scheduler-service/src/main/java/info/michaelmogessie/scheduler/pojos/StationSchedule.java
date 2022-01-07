@@ -14,16 +14,17 @@ public class StationSchedule {
         for (Schedule schedule : schedules) {
             CheckPoint cp = schedule.getCheckPoints().stream()
                     .filter(checkPoint -> checkPoint.getStation().getStationId() == stationId).toList().get(0);
-
-            arrivals.add(new SimpleSchedule(
-                    schedule.getScheduleId(),
-                    schedule.getTrain().getTrainId(),
-                    schedule.getTrain().getTrainName(),
-                    cp.getEta(),
-                    !schedule.getCheckPoints().isEmpty()
-                            ? schedule.getCheckPoints().get(0).getStation().getStationName()
-                            : null,
-                    null, schedule.getStatus()));
+            if (schedule.getCheckPoints().get(0).getStation().getStationId() != stationId) {
+                arrivals.add(new SimpleSchedule(
+                        schedule.getScheduleId(),
+                        schedule.getTrain().getTrainId(),
+                        schedule.getTrain().getTrainName(),
+                        cp.getEta(),
+                        !schedule.getCheckPoints().isEmpty()
+                                ? schedule.getCheckPoints().get(0).getStation().getStationName()
+                                : null,
+                        null, schedule.getStatus()));
+            }
             if (schedule.getCheckPoints()
                     .get(schedule.getCheckPoints().size() - 1).getStation().getStationId() != stationId
                     && !schedule.getCheckPoints().isEmpty()) {

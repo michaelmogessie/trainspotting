@@ -132,5 +132,4 @@ public class ScheduleController {
                         return ResponseEntity.badRequest().body("Unable to delete " + scheduleId);
                 }
         }
-
 }

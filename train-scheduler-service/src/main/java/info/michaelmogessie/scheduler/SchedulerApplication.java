@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = { "info.michaelmogessie" })
 @EnableDiscoveryClient
 @EnableJpaRepositories
 @EnableEurekaClient

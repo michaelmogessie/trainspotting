@@ -34,23 +34,13 @@ export class AppComponent {
 
 
   getSchedules(stationId: number) {
-    // this.http.get('http://localhost:8485/station-schedules/' + stationId).subscribe((schedules: any) => {
-    //   // eslint-disable-next-line @typescript-eslint/dot-notation
-    //   if (schedules) {
-    //     this.departureUpdateService.emitDepartureUpdateEvent(schedules.departures);
-    //     this.arrivalUpdateService.emitArrivalUpdateEvent(schedules.arrivals);
-    //   }
-    // });
-
     if (this.webSocket) {
       this.webSocket.complete();
     }
-    this.webSocket = webSocket('ws://localhost:8485/station-schedules/' + stationId);
-    this.webSocket.asObservable().subscribe((response: any) => {
-      let stationUpdate = JSON.parse(response.data);
-      console.table(stationUpdate)
-      this.departureUpdateService.emitDepartureUpdateEvent(stationUpdate.departures);
-      this.arrivalUpdateService.emitArrivalUpdateEvent(stationUpdate.arrivals);
+    this.webSocket = webSocket('ws://localhost:8485/station-schedules?stationId=' + stationId);
+    this.webSocket.asObservable().subscribe((stationUpdate: any) => {
+      if (stationUpdate && stationUpdate.departures) this.departureUpdateService.emitDepartureUpdateEvent(stationUpdate.departures);
+      if (stationUpdate && stationUpdate.arrivals) this.arrivalUpdateService.emitArrivalUpdateEvent(stationUpdate.arrivals);
     })
 
 

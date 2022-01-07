@@ -1,6 +1,7 @@
 package info.michaelmogessie.scheduler.businesses;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import info.michaelmogessie.scheduler.pojos.Schedule;
 import info.michaelmogessie.scheduler.pojos.StationSchedule;
@@ -28,6 +29,7 @@ public class ScheduleBusiness {
         return scheduleRepository.save(schedule);
     }
 
+    @Transactional
     public StationSchedule getStationSchedule(int stationId) {
         return new StationSchedule(
                 scheduleRepository.findByCheckPointsStationStationIdEqualsOrderByCheckPointsEtaAsc(stationId),
