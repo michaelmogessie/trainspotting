@@ -14,6 +14,18 @@ export class DeparturesComponent implements OnInit {
     this.departureUpdateService.departureUpdate.subscribe((departures: {}) => {
       this.departures = departures;
     });
+    this.departureUpdateService.singleDepartureUpdate.subscribe((stationUpdate: any) => {
+      this.departures.filter(this.findDeparturesToUpdate(stationUpdate)).map((departure: any) => {
+        departure.atStation = stationUpdate.atStation
+        departure.status = stationUpdate.status
+      })
+    })
+  }
+
+  findDeparturesToUpdate(stationUpdate: any) {
+    return function (departure: any) {
+      return departure.scheduleId == stationUpdate.scheduleId && departure.trainId == stationUpdate.trainId
+    }
   }
 
 }

@@ -13,7 +13,7 @@
     <mat-expansion-panel *ngFor="let arrival of arrivals" disabled>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <span class="trainName">{{arrival.trainName | uppercase}}</span>
+                <span class="trainName">{{arrival.trainId}} {{arrival.trainName | uppercase}}</span>
                 <span class="fromStation"><span *ngIf="arrival.fromStation">{{arrival.fromStation |
                         uppercase}}</span></span>
                         <span class="atStation"><span *ngIf="arrival.atStation">{{arrival.atStation.stationName}}</span><span *ngIf="!arrival.atStation">-</span></span>

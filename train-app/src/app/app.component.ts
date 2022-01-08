@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
       let scheduleList = schedules['_embedded'];
       if (scheduleList) {
         this.schedules = scheduleList.simpleScheduleList;
-        console.table(this.schedules)
       }
     });
   }
@@ -49,10 +48,19 @@ export class AppComponent implements OnInit {
   }
 
   stationChanged(scheduleId: number, station: any) {
-
+    let schedule = this.schedules.filter((schedule: any) => schedule.scheduleId === scheduleId)[0];
+    schedule.atStation = station;
+    this.http.post('http://localhost:8485/train-schedules/', schedule).subscribe((schedule: any) => {
+      // eslint-disable-next-line @typescript-eslint/dot-notation
+    });
   }
 
   statusChanged(scheduleId: number, status: string) {
+    let schedule = this.schedules.filter((schedule: any) => schedule.scheduleId === scheduleId)[0];
+    schedule.status = status;
+    this.http.post('http://localhost:8485/train-schedules/', schedule).subscribe((schedule: any) => {
+      // eslint-disable-next-line @typescript-eslint/dot-notation
+    });
 
   }
 }

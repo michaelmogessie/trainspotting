@@ -52,9 +52,9 @@ public class ScheduleBusiness {
         schedule.setAtStation(trainSchedule.getAtStation());
         schedule.setStatus(trainSchedule.getStatus());
         scheduleRepository.save(schedule);
-        if (trainSchedule.getAtStation() != null) {
-            SchedulesWebSocketHandler.sendStationUpdate(trainSchedule.getAtStation().getStationId(), trainSchedule);
-        }
+        schedule.getCheckPoints().forEach(checkPoint -> {
+            SchedulesWebSocketHandler.sendStationUpdate(checkPoint.getStation().getStationId(), trainSchedule);
+        });
     }
 
 }

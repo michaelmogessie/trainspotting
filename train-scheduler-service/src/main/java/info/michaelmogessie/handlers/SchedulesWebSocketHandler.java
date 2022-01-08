@@ -60,6 +60,9 @@ public class SchedulesWebSocketHandler extends TextWebSocketHandler {
     }
 
     public static void sendStationUpdate(int stationId, SimpleSchedule simpleSchedule) {
+        if (!stationKiosks.containsKey(stationId)) {
+            return;
+        }
         stationKiosks.get(stationId).forEach(stationKiosk -> {
             try {
                 stationKiosk.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(simpleSchedule)));

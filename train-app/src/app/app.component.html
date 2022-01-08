@@ -4,7 +4,7 @@
     <mat-label>Train Name</mat-label>
     <mat-select [(ngModel)]="trainId">
       <mat-option *ngFor="let train of trains" [value]="train.trainId" (click)="trainChanged(train.trainId)">
-        {{train.trainName}}
+        {{train.trainId}} {{train.trainName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -14,6 +14,7 @@
   <mat-expansion-panel disabled>
     <mat-expansion-panel-header>
       <mat-panel-title class="board-header">
+        <span class="schedule">Schedule</span>
         <span class="fromStation">From</span>
         <span class="toStation">To</span>
         <span class="arrives">Arrives</span>
@@ -25,6 +26,7 @@
   <mat-expansion-panel *ngFor="let schedule of schedules">
     <mat-expansion-panel-header>
       <mat-panel-title>
+        <span class="schedule"><span *ngIf="schedule.scheduleId">{{schedule.scheduleId}}</span></span>
         <span class="fromStation"><span *ngIf="schedule.fromStation">{{schedule.fromStation |
             uppercase}}</span></span>
         <span class="toStation"><span *ngIf="schedule.toStation">{{schedule.toStation |
@@ -38,23 +40,23 @@
         <span class="status">{{schedule.status}}</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
-      <mat-form-field appearance="fill" class="drop-down">
-        <mat-label>Now at:</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let station of schedule.stations" [value]="station.stationName"
-            (click)="stationChanged(schedule.scheduleId, station)">
-            {{station.stationName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="drop-down">
-        <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="status">
-          <mat-option *ngFor="let status of schedule.statuses" [value]="status"
-            (click)="statusChanged(schedule.scheduleId, status)">
-            {{status}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field appearance="fill" class="drop-down">
+      <mat-label>Now at:</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let station of schedule.stations" [value]="station.stationName"
+          (click)="stationChanged(schedule.scheduleId, station)">
+          {{station.stationName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="drop-down">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="schedule.status">
+        <mat-option *ngFor="let status of schedule.statuses" [value]="status"
+          (click)="statusChanged(schedule.scheduleId, status)">
+          {{status}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </mat-expansion-panel>
 </mat-accordion>

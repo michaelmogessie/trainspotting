@@ -41,6 +41,10 @@ export class AppComponent {
     this.webSocket.asObservable().subscribe((stationUpdate: any) => {
       if (stationUpdate && stationUpdate.departures) this.departureUpdateService.emitDepartureUpdateEvent(stationUpdate.departures);
       if (stationUpdate && stationUpdate.arrivals) this.arrivalUpdateService.emitArrivalUpdateEvent(stationUpdate.arrivals);
+      if (stationUpdate.scheduleId) {
+        this.departureUpdateService.emitSingleDepartureUpdateEvent(stationUpdate);
+        this.arrivalUpdateService.emitSingleArrivalUpdateEvent(stationUpdate);
+      }
     })
 
 

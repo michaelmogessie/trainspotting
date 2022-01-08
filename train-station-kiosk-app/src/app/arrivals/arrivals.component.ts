@@ -14,6 +14,18 @@ export class ArrivalsComponent implements OnInit {
     this.arrivalUpdateService.arrivalUpdate.subscribe((arrivals: {}) => {
       this.arrivals = arrivals;
     });
+    this.arrivalUpdateService.singleArrivalUpdate.subscribe((stationUpdate: any) => {
+      this.arrivals.filter(this.findArrivalsToUpdate(stationUpdate)).map((arrival: any) => {
+        arrival.atStation = stationUpdate.atStation
+        arrival.status = stationUpdate.status
+      })
+    })
+  }
+
+  findArrivalsToUpdate(stationUpdate: any) {
+    return function (arrival: any) {
+      return arrival.scheduleId == stationUpdate.scheduleId && arrival.trainId == stationUpdate.trainId
+    }
   }
 
 }

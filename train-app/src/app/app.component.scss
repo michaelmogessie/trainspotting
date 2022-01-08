@@ -18,14 +18,22 @@
 }
 
 .fromStation {
-    width: 20em;
+    width: 15em;
     font-size: 1.3em;
     color: hsl(39, 94%, 50%);
     font-family: retrofont;
 }
 
+.schedule {
+    width: 10em;
+    font-size: 1.3em;
+    color: hsl(39, 94%, 50%);
+    font-family: retrofont;
+    text-align: center;
+}
+
 .toStation {
-    width: 20em;
+    width: 15em;
     font-size: 1.3em;
     color: hsl(39, 94%, 50%);
     font-family: retrofont;
@@ -58,6 +66,6 @@
 
 .drop-down {
     width: 48%;
-    margin-top: 1%;;
+    margin-top: 1%;
     margin-right: 1%;
 }

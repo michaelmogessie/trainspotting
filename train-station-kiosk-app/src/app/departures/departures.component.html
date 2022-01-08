@@ -13,7 +13,7 @@
     <mat-expansion-panel *ngFor="let departure of departures" disabled>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <span class="trainName">{{departure.trainName | uppercase}}</span>
+                <span class="trainName">{{departure.trainId}} {{departure.trainName | uppercase}}</span>
                 <span class="toStation"><span
                         *ngIf="departure.toStation">{{departure.toStation | uppercase}}</span></span>
                 <span class="atStation"><span *ngIf="departure.atStation">{{departure.atStation.stationName}}</span><span *ngIf="!departure.atStation">-</span></span>

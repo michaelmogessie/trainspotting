@@ -116,6 +116,10 @@ public class SimpleSchedule {
         this.eta = eta;
     }
 
+    public SimpleSchedule() {
+
+    }
+
     public SimpleSchedule(int scheduleId, int trainId, String trainName, Timestamp eta, String fromStation,
             String toStation, String status) {
         this.scheduleId = scheduleId;
