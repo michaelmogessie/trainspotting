@@ -1,0 +1,2 @@
+kubectl delete svc trainspotter-admin-nodeport-service -n michaelmogessie || true
+kubectl create -f /home/michael/git/trainspotting/trainspotter-admin-app/k8s/trainspotter_admin_nodeport_service_def.yml

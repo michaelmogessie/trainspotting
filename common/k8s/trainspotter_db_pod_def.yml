@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: trainspotter-db
+    labels:
+      app.name: trainspotter-db
+    namespace: michaelmogessie
+spec:
+    containers:
+    - name: mysql
+      image: mysql:5.7
+      env:
+        - name:  MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: trainspotter-db-config-secret
+              key: MYSQL_ROOT_PASSWORD
