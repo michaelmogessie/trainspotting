@@ -1,0 +1,27 @@
+<mat-accordion>
+    <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="board-header">
+                <span class="trainName">Train</span>
+                <span class="toStation">To</span>
+                <span class="atStation">Now at</span>
+                <span class="departs">Departs</span>
+                <span class="status">Status</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngFor="let departure of departures" disabled>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span class="trainName">{{departure.trainId}} {{departure.trainName | uppercase}}</span>
+                <span class="toStation"><span
+                        *ngIf="departure.toStation">{{departure.toStation | uppercase}}</span></span>
+                <span class="atStation"><span *ngIf="departure.atStation">{{departure.atStation.stationName}}</span><span *ngIf="!departure.atStation">-</span></span>
+                <span class="departs"><span *ngIf="departure.eta">{{departure.eta | date:
+                        "MMM d
+                        yyyy, h:mm a"}}</span></span>
+                <span class="status">{{departure.status | uppercase}}</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+</mat-accordion>

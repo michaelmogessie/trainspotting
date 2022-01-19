@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-app-deployment
+  namespace: michaelmogessie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: eureka
+  template:
+    metadata:
+      labels:
+        app.name: eureka
+    spec:
+      containers:
+      - name: discovery-app
+        image: michaelmogessie/discovery-app:latest
+        ports:
+          - containerPort: 8484
+            hostPort: 8484
+      imagePullSecrets:
+      - name: regcred

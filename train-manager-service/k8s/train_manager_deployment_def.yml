@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: train-manager-deployment
+  namespace: michaelmogessie
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.name: train-manager
+  template:
+    metadata:
+      labels:
+        app.name: train-manager
+    spec:
+      containers:
+      - name: train-manager
+        image: michaelmogessie/train-manager-app:latest
+        ports:
+          - containerPort: 8486
+      imagePullSecrets:
+      - name: regcred

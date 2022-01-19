@@ -1,0 +1,13 @@
+<ng-template>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let schedule of schedules">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{schedule.arrivals[schedule.arrivals.length - 1].station.stationName}}</mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </mat-accordion>
+</ng-template>
+
+<!-- <button style="position: absolute; bottom: 2%; right: 2%;" mat-fab color="primary" aria-label="Add" (click)="addSchedule()">
+    <mat-icon>add</mat-icon>
+</button> -->

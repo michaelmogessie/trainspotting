@@ -1,0 +1,38 @@
+<mat-accordion>
+    <mat-expansion-panel disabled>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="board-header">
+                <span class="stationName">Station No.</span>
+                <span class="stationName">Station Name</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngFor="let station of stations">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span class="stationName"><span *ngIf="station.stationId">{{station.stationId}}</span></span>
+                <span class="stationName">{{station.stationName | uppercase}}</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+            <mat-label>Station Name</mat-label>
+            <input matInput [(ngModel)]="station.stationName" required>
+        </mat-form-field><br>
+        <div class="right-aligned">
+            <button class="fabs" mat-mini-fab aria-label="Save Station" (click)="saveStation(station)">
+                <mat-icon>save</mat-icon>
+            </button>
+        </div>
+        <div class="right-aligned">
+            <button class="fabs" mat-mini-fab aria-label="Delete Station" (click)="removeStation(station.stationId)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </mat-expansion-panel>
+    <div class="right-aligned">
+        <button mat-fab class="fabs top-margin-medium right-margin-medium" aria-label="New Station"
+            (click)="addStation()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-accordion>

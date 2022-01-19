@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: train-manager-db
+    labels:
+      app.name: train-manager-db
+    namespace: michaelmogessie
+spec:
+    containers:
+    - name: mysql
+      image: mysql:5.7
+      env:
+        - name:  MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: train-manager-db-config-secret
+              key: MYSQL_ROOT_PASSWORD

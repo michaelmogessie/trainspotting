@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@font-face {
+    font-family: retrofont;
+    src: url("assets/fonts/LEDBDREV.TTF") format("opentype");
+}
+
+.tooltip-eta {
+    color: hsl(39, 94%, 50%) !important;
+    background-color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.mat-expansion-indicator:after {
+    color: hsl(39, 94%, 50%) !important;
+}

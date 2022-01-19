@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: train-scheduler-deployment
+  namespace: michaelmogessie
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.name: train-scheduler
+  template:
+    metadata:
+      labels:
+        app.name: train-scheduler
+    spec:
+      containers:
+      - name: train-scheduler
+        image: michaelmogessie/train-scheduler-app:latest
+        ports:
+          - containerPort: 8485
+      imagePullSecrets:
+      - name: regcred
